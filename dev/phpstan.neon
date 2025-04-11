@@ -1,6 +1,14 @@
 parameters:
-	level: 9
-	paths:
-		- ../src
-		- ../tests
-	tmpDir: ../var/cache/phpstan
+    exceptions:
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+        uncheckedExceptionClasses:
+            - 'PHPUnit\Framework\Exception'
+            - 'Webmozart\Assert\InvalidArgumentException'
+    level: 9
+    paths:
+        - ../src
+        - ../tests
+    tmpDir: ../var/cache/phpstan
+    treatPhpDocTypesAsCertain: false

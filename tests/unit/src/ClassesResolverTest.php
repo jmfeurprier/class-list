@@ -4,6 +4,7 @@ namespace Jmf\ClassList;
 
 use Jmf\ClassList\Exception\ClassNotFoundException;
 use Override;
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class ClassesResolverTest extends TestCase
@@ -18,25 +19,31 @@ class ClassesResolverTest extends TestCase
 
     public function testResolveWithObject(): void
     {
-        $result = $this->classesResolver->resolve($this);
+        $result = $this->classesResolver->resolveForObject($this);
 
-        $this->assertContains(self::class, $result);
-        $this->assertContains(TestCase::class, $result);
+        self::assertContains(self::class, $result);
+        self::assertContains(TestCase::class, $result);
     }
 
+    /**
+     * @throws ClassNotFoundException
+     */
     public function testResolveWithExistingClass(): void
     {
-        $result = $this->classesResolver->resolve(ClassesResolverTest::class);
+        $result = $this->classesResolver->resolveForClass(ClassesResolverTest::class);
 
-        $this->assertContains(self::class, $result);
-        $this->assertContains(TestCase::class, $result);
+        self::assertContains(self::class, $result);
+        self::assertContains(TestCase::class, $result);
     }
 
+    /**
+     * @throws ClassNotFoundException
+     */
     public function testResolveWithUndefinedClass(): void
     {
         $this->expectException(ClassNotFoundException::class);
 
         // @phpstan-ignore argument.type
-        $this->classesResolver->resolve('UndefinedClass');
+        $this->classesResolver->resolveForClass('UndefinedClass');
     }
 }

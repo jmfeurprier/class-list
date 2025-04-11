@@ -30,9 +30,9 @@ $foo = new Foo();
 $bar = new Bar();
 $baz = new Baz();
 
-print_r($resolver->resolve($foo));
-print_r($resolver->resolve($bar));
-print_r($resolver->resolve($baz));
+print_r($resolver->resolveForObject($foo));
+print_r($resolver->resolveForObject($bar));
+print_r($resolver->resolveForObject($baz));
 ```
 
 Will output:
@@ -68,14 +68,19 @@ class Foo {}
 class Bar extends Foo {}
 class Baz extends Bar {}
 
-print_r($resolver->resolve(Foo::class));
-print_r($resolver->resolve(Bar::class));
-print_r($resolver->resolve(Baz::class));
+print_r('stdClass');
+print_r($resolver->resolveForClass(Foo::class));
+print_r($resolver->resolveForClass(Bar::class));
+print_r($resolver->resolveForClass(Baz::class));
 ```
 
 Will output:
 
 ````text
+Array
+(
+    [0] => stdClass
+)
 Array
 (
     [0] => Foo

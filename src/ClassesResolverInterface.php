@@ -7,11 +7,16 @@ use Jmf\ClassList\Exception\ClassNotFoundException;
 interface ClassesResolverInterface
 {
     /**
-     * @param object|class-string $subject
+     * @return class-string[]
+     */
+    public function resolveForObject(object $subject): iterable;
+
+    /**
+     * @param class-string $subject
      *
      * @return class-string[]
      *
      * @throws ClassNotFoundException
      */
-    public function resolve(object | string $subject): iterable;
+    public function resolveForClass(string $subject): iterable;
 }

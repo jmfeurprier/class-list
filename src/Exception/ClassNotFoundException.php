@@ -2,9 +2,9 @@
 
 namespace Jmf\ClassList\Exception;
 
-use Exception;
+use InvalidArgumentException;
 
-class ClassNotFoundException extends Exception
+class ClassNotFoundException extends InvalidArgumentException
 {
     /**
      * @param class-string $class

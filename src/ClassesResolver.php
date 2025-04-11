@@ -6,38 +6,37 @@ use Jmf\ClassList\Exception\ClassNotFoundException;
 use Override;
 use Webmozart\Assert\Assert;
 
-readonly class ClassesResolver implements ClassesResolverInterface
+class ClassesResolver implements ClassesResolverInterface
 {
     #[Override]
-    public function resolve(object | string $subject): iterable
+    public function resolveForObject(object $subject): iterable
     {
-        $baseClass     = $this->getBaseClass($subject);
+        return $this->doResolve($subject::class);
+    }
+
+    #[Override]
+    public function resolveForClass(string $subject): iterable
+    {
+        if (!class_exists($subject)) {
+            throw new ClassNotFoundException($subject);
+        }
+
+        return $this->doResolve($subject);
+    }
+
+    /**
+     * @param class-string $baseClass
+     *
+     * @return class-string[]
+     */
+    private function doResolve(string $baseClass): iterable
+    {
         $parentClasses = $this->getParentClasses($baseClass);
 
         return [
             $baseClass,
             ...$parentClasses,
         ];
-    }
-
-    /**
-     * @param object|class-string $subject
-     *
-     * @return class-string
-     *
-     * @throws ClassNotFoundException
-     */
-    private function getBaseClass(object | string $subject): string
-    {
-        if (is_object($subject)) {
-            return $subject::class;
-        }
-
-        if (!class_exists($subject)) {
-            throw new ClassNotFoundException($subject);
-        }
-
-        return $subject;
     }
 
     /**
