@@ -16,9 +16,17 @@ class ClassesResolverTest extends TestCase
         $this->classesResolver = new ClassesResolver();
     }
 
-    public function testResolve(): void
+    public function testResolveWithObject(): void
     {
         $result = $this->classesResolver->resolve($this);
+
+        $this->assertContains(self::class, $result);
+        $this->assertContains(TestCase::class, $result);
+    }
+
+    public function testResolveWithExistingClass(): void
+    {
+        $result = $this->classesResolver->resolve(ClassesResolverTest::class);
 
         $this->assertContains(self::class, $result);
         $this->assertContains(TestCase::class, $result);

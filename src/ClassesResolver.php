@@ -3,17 +3,12 @@
 namespace Jmf\ClassList;
 
 use Jmf\ClassList\Exception\ClassNotFoundException;
+use Override;
 use Webmozart\Assert\Assert;
 
-readonly class ClassesResolver
+readonly class ClassesResolver implements ClassesResolverInterface
 {
-    /**
-     * @param object|class-string $subject
-     *
-     * @return class-string[]
-     *
-     * @throws ClassNotFoundException
-     */
+    #[Override]
     public function resolve(object | string $subject): iterable
     {
         $baseClass     = $this->getBaseClass($subject);
