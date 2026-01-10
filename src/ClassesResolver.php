@@ -6,7 +6,7 @@ use Jmf\ClassList\Exception\ClassNotFoundException;
 use Override;
 use Webmozart\Assert\Assert;
 
-class ClassesResolver implements ClassesResolverInterface
+readonly class ClassesResolver implements ClassesResolverInterface
 {
     #[Override]
     public function resolveForObject(object $subject): iterable
