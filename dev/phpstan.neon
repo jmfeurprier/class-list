@@ -4,11 +4,17 @@ parameters:
             missingCheckedExceptionInThrows: true
             tooWideThrowType: true
         uncheckedExceptionClasses:
-            - 'PHPUnit\Framework\Exception'
-            - 'Webmozart\Assert\InvalidArgumentException'
-    level: 9
+            - 'LogicException'
+            - 'RuntimeException'
+    ignoreErrors:
+        -
+            identifier: 'missingType.checkedException'
+            paths:
+                - '../tests/*'
+            reportUnmatched: false
+    level: 10
     paths:
-        - ../src
-        - ../tests
+        - ../src/
+        - ../tests/
     tmpDir: ../var/cache/phpstan
     treatPhpDocTypesAsCertain: false
